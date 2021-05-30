@@ -1,0 +1,8 @@
+import { Platform } from "react-native";
+let baseURL = "";
+{
+  Platform.OS == "android"
+    ? (baseURL = "http://10.0.2.2:3000/v1/api/")
+    : (baseURL = "http://localhost:3000/v1/api/");
+}
+export default baseURL;
