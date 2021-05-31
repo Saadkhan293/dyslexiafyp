@@ -55,7 +55,7 @@ const SignUpScreen = ({ navigation }) => {
    
       
       axios
-        .post("http://192.168.1.105:3000/v1/api/users/register", user)
+        .post("http://192.168.1.105:4000/v1/api/users/register", user)
         .then((response) => {
           if (response.status == 200) {
             Toast.show({

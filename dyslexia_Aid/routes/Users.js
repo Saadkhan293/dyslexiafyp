@@ -4,15 +4,15 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt=require("jsonwebtoken");
 
-router.get(`/`, async (req, res) => {
-  const userlist = await Users.find();
-  if (!userlist) {
-    res.status(500).json({
-      success: false,
-    });
-  }
-  res.send(userlist);
-});
+// router.get(`/`, async (req, res) => {
+//   const userlist = await Users.find();
+//   if (!userlist) {
+//     res.status(500).json({
+//       success: false,
+//     });
+//   }
+//   res.send(userlist);
+// });
 router.get(`/`, async (req, res) => {
   const userlist = await Users.find().select("-passwordHash");
   if (!userlist) {
@@ -75,6 +75,23 @@ router.post(`/register`, async (req, res) => {
     }
 
      res.send(users);
+});
+router.delete("/:id", (req, res) => {
+  Users.findByIdAndRemove(req.params.id)
+    .then((user) => {
+      if (user) {
+        return res
+          .status(200)
+          .json({ success: true, message: "the user is deleted!" });
+      } else {
+        return res
+          .status(404)
+          .json({ success: false, message: "user not found!" });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).json({ success: false, error: err });
+    });
 });
 
 
